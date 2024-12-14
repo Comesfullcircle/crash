@@ -10,7 +10,10 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name= "\"user\"")
+@Table(name= "\"user\"",
+indexes = {
+        @Index(name = "user_username_idx", columnList = "username", unique = true)
+})
 public class UserEntity implements UserDetails {
 
     @Id
