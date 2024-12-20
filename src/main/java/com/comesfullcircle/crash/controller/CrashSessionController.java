@@ -3,14 +3,18 @@ package com.comesfullcircle.crash.controller;
 import com.comesfullcircle.crash.model.crashsession.CrashSession;
 import com.comesfullcircle.crash.model.crashsession.CrashSessionPatchRequestBody;
 import com.comesfullcircle.crash.model.crashsession.CrashSessionPostRequestBody;
+import com.comesfullcircle.crash.model.crashsession.CrashSessionRegistrationStatus;
+import com.comesfullcircle.crash.model.entity.UserEntity;
 import com.comesfullcircle.crash.model.sessionspeaker.SessionSpeaker;
 import com.comesfullcircle.crash.model.sessionspeaker.SessionSpeakerPatchRequestBody;
 import com.comesfullcircle.crash.model.sessionspeaker.SessionSpeakerPostRequestBody;
 import com.comesfullcircle.crash.service.CrashSessionService;
+import com.comesfullcircle.crash.service.RegistrationService;
 import com.comesfullcircle.crash.service.SessionSpeakerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +25,8 @@ public class CrashSessionController {
 
     @Autowired
     private CrashSessionService crashSessionService;
+    @Autowired
+    private RegistrationService registrationService;
 
    @GetMapping
     public ResponseEntity<List<CrashSession>> getCrashSessions() {
@@ -29,10 +35,20 @@ public class CrashSessionController {
    }
 
     @GetMapping("/{sessionId}")
-    public ResponseEntity<CrashSession> getSessionSpeakerBySpeakerId(@PathVariable Long sessionId)
+    public ResponseEntity<CrashSession> getCrashSessionBySessionId(@PathVariable Long sessionId)
     {
         var crashSession = crashSessionService.getCrashSessionBySessionId(sessionId);
         return ResponseEntity.ok(crashSession);
+    }
+
+    @GetMapping("/{sessionId}/registration-status")
+    public ResponseEntity<CrashSessionRegistrationStatus> getCrashSessionRegistrationStatusBySessionId(
+            @PathVariable Long sessionId, Authentication authentication)
+    {
+        var registrationStatus =
+                registrationService.getCrashSessionRegistrationStatusBySessionIdAndCurrentUser(
+                        sessionId, (UserEntity) authentication.getPrincipal());
+        return ResponseEntity.ok(registrationStatus);
     }
 
     @PostMapping
