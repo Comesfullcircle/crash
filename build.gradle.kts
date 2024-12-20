@@ -28,6 +28,9 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
+
+	//faker 기반 테스트 데이터 세팅
+	implementation("net.datafaker:datafaker:2.4.2")
 }
 
 tasks.named<Test>("test") {
