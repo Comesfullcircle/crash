@@ -19,6 +19,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
@@ -31,6 +32,10 @@ dependencies {
 
 	//faker 기반 테스트 데이터 세팅
 	implementation("net.datafaker:datafaker:2.4.2")
+
+	implementation("org.springframework.boot:spring-boot-starter-webflux") // Spring WebFlux
+	implementation("io.projectreactor:reactor-core")
+
 }
 
 tasks.named<Test>("test") {
