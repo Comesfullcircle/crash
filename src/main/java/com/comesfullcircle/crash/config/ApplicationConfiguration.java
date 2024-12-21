@@ -11,6 +11,7 @@ import com.comesfullcircle.crash.model.sessionspeaker.SessionSpeakerPostRequestB
 import com.comesfullcircle.crash.model.user.UserSignUpRequestBody;
 import com.comesfullcircle.crash.service.CrashSessionService;
 import com.comesfullcircle.crash.service.SessionSpeakerService;
+import com.comesfullcircle.crash.service.SlackService;
 import com.comesfullcircle.crash.service.UserService;
 import net.datafaker.Faker;
 import org.slf4j.Logger;
@@ -35,10 +36,6 @@ import java.util.stream.IntStream;
 @Configuration
 public class ApplicationConfiguration {
 
-    /*private static final WebClient webClient = WebClient.builder()
-            .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-            .build();*/
-
     //Spring RestClient 공부 - API 실습 및 연동
     private static final RestClient restClient = RestClient.create();
 
@@ -60,18 +57,21 @@ public class ApplicationConfiguration {
         return new ApplicationRunner() {
             @Override
             public void run(ApplicationArguments args) throws Exception {
+                createTestUsers();
+                createTestSessionSpeakers(10);
+
            /*      // TODO : 유저 및 세션스피커 생성
                 createTestUsers();
                 createTestSessionSpeakers(10);*/
                 // private Double getUsdToKrwExchangeRate(){
-                var bitcoinUsdPrice = getBitcoinUsdPrice();
+       //         var bitcoinUsdPrice = getBitcoinUsdPrice();
                 //TODO : USD to KRW 환율 조회
-                var usdToKrwExchangeRate = getUsdToKrwExchangeRate();
+       //         var usdToKrwExchangeRate = getUsdToKrwExchangeRate();
                 //TODO : Bitcoin KRW 가격 계산
-                var koreanPremium = 1.1;
-                var bitcoinKrwPrice = bitcoinUsdPrice + usdToKrwExchangeRate;
+       //         var koreanPremium = 1.1;
+       //         var bitcoinKrwPrice = bitcoinUsdPrice + usdToKrwExchangeRate;
 
-                logger.info(String.format("BIT KRW: %.2f", bitcoinKrwPrice));
+       //         logger.info(String.format("BIT KRW: %.2f", bitcoinKrwPrice));
             }
         };
     }
@@ -97,7 +97,7 @@ public class ApplicationConfiguration {
 
     private Double getUsdToKrwExchangeRate(){
 
-        String redirectUrl = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=AUTH키발급한거!!&searchdate=20241220&data=AP01";
+      //  String redirectUrl = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=본인이 발급받은 key&searchdate=20241220&data=AP01";
 
         var response =
                 restClient
