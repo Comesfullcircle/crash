@@ -1,6 +1,7 @@
 package com.comesfullcircle.crash.model.entity;
 
 import com.comesfullcircle.crash.model.user.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -90,6 +91,7 @@ public class UserEntity implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
        if(this.role.equals(Role.ADMIN)) {
            return List.of(
@@ -129,26 +131,26 @@ public class UserEntity implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
-      //  return UserDetails.super.isAccountNonExpired();
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
-       // return UserDetails.super.isAccountNonLocked();
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
-       // return UserDetails.super.isCredentialsNonExpired();
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
-       // return UserDetails.super.isEnabled();
         return true;
     }
 

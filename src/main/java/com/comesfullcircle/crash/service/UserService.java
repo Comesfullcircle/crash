@@ -7,6 +7,7 @@ import com.comesfullcircle.crash.model.user.User;
 import com.comesfullcircle.crash.model.user.UserAuthenticationResponse;
 import com.comesfullcircle.crash.model.user.UserLoginRequestBody;
 import com.comesfullcircle.crash.model.user.UserSignUpRequestBody;
+import com.comesfullcircle.crash.repository.UserEntityCacheRepository;
 import com.comesfullcircle.crash.repository.UserEntityRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserEntityRepository userEntityRepository;
+
+    @Autowired
+    private UserEntityCacheRepository userEntityCacheRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -67,8 +71,16 @@ public class UserService implements UserDetailsService {
     }
 
     private UserEntity getUserEntityByUsername(String username) {
-        return userEntityRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        return userEntityCacheRepository
+                .getUserEntityCache(username)
+                .orElseGet(
+                        () -> {
+                            var userEntity =
+                                    userEntityRepository
+                                    .findByUsername(username)
+                                    .orElseThrow(()-> new UserNotFoundException(username));
+                    userEntityCacheRepository.setUserEntityCache(userEntity);
+                    return userEntity;
+                });
     }
 }

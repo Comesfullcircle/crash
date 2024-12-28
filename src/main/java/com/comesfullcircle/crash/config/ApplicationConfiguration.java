@@ -97,7 +97,7 @@ public class ApplicationConfiguration {
 
     private Double getUsdToKrwExchangeRate(){
 
-      //  String redirectUrl = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=본인이 발급받은 key&searchdate=20241220&data=AP01";
+        String redirectUrl = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=본인거=20241220&data=AP01";
 
         var response =
                 restClient

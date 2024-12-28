@@ -36,6 +36,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux") // Spring WebFlux
 	implementation("io.projectreactor:reactor-core")
 
+	//reids 추가
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
 }
 
 tasks.named<Test>("test") {

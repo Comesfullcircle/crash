@@ -26,7 +26,7 @@ public class SlackService {
 
         var response = restClient
                 .post()
-              //  .uri("https://hooks.slack.com/services/T080SLYH2DC/B0861441F7F/본인꺼")
+                .uri("https://hooks.slack.com/services/T080SLYH2DC/B0861441F7F/본인거")
                 .body(slackNotificationMessage)
                 .retrieve()
                 .body(String.class);
